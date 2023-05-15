@@ -7,8 +7,8 @@ import RegisterView from '../views/RegisterView'
 const routes = [
   {
     path: '/',
-    name: 'home',
-    component: HomeView
+    name: 'login',
+    component: LoginView
   },
   {
     path: '/basket',
@@ -16,9 +16,9 @@ const routes = [
     component: BasketView
   },
   {
-    path: '/login',
-    name: 'Log in',
-    component: LoginView
+    path: '/home',
+    name: 'home',
+    component: HomeView
   },
   {
     path: '/register',

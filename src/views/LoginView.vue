@@ -1,15 +1,19 @@
 <template>
+  <nav>
+    <router-link to="/">Log in</router-link>
+    <router-link to="/register">Sign up</router-link>
+  </nav>
   <div class="login">
     <h1>Log in</h1>
-    <form class="login_form">
+    <div class="login_form">
       <label><b>Username</b></label>
-      <input type="text" placeholder="Enter Username" name="username" required>
+      <input type="text" v-model="username" placeholder="Enter Username" name="username" required>
 
       <label><b>Password</b></label>
-      <input type="password" placeholder="Enter Password" name="password" required>
+      <input type="password" v-model="password" placeholder="Enter Password" name="password" required>
 
-      <button type="submit">Login</button>
-    </form>
+      <button @click="login()">Login</button>
+    </div>
   </div>
 </template>
 
@@ -61,3 +65,59 @@ button:hover{
 }
 
 </style>
+
+<script>
+import axios from "axios";
+import { useSessionStore} from "@/stores/session";
+
+export default {
+  name: "LoginView",
+  setup () {
+    const store = useSessionStore()
+    return{store}
+  },
+  data : function(){
+    return {
+      username : '',
+      password : ''
+    }
+  },
+  methods : {
+    login(){
+      console.log("logges")
+      let User = {
+        username : this.username,
+        password : this.password
+      }
+      axios.post("http://localhost:5000/api/auth/signin", User)
+      .then(response =>{
+        console.log(response)
+        if (response.status  === 200){
+          this.store.setToken(response.data.accessToken)
+          this.$router.push('/home')
+        }
+
+      }),
+          error => {
+        console.log(error)
+          }
+    },
+    logout(){
+      this.store.$reset()
+    },
+    checkConnection(){
+      if (this.store.getToken() !== ''){
+        this.$router.push('/home')
+      }
+      else{
+        this.store.$reset()
+      }
+    }
+    },
+    created() {
+    this.checkConnection()
+  }
+
+
+}
+</script>

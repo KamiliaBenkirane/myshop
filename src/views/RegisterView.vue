@@ -1,34 +1,62 @@
 <template>
+  <nav>
+    <router-link to="/">Log in</router-link>
+    <router-link to="/register">Sign up</router-link>
+  </nav>
   <div class="register">
     <h1>Sign up !</h1>
-    <form class="signup_form">
-      <label><b>Name</b></label>
-      <input type="text" placeholder="Enter Name" name="name" required>
-
-      <label><b>Surname</b></label>
-      <input type="text" placeholder="Enter Surname" name="surname" required>
+    <div class="signup_form">
+      <label><b>Username</b></label>
+      <input type="text" v-model="username" placeholder="Enter Username" name="username" required>
 
       <label><b>E-mail address</b></label>
-      <input type="text" placeholder="Enter Email" name="email" required>
-      <div id="birthday">
-      <label ><b>Birthday date</b></label><br>
-      <input type="date" name="date" required><br><br>
-      </div>
-      <label><b>Gender</b></label>
-      <div class="radio">
-      <input type="radio" id="woman" name="gender" value="Woman">
-      <label for="woman">Woman</label><br>
-      <input type="radio" id="man" name="gender" value="Man">
-      <label for="man">Man</label><br>
-      <input type="radio" id="other" name="gender" value="Other">
-      <label for="other">Other</label>
-      </div>
+      <input type="text" v-model="email" placeholder="Enter Email" name="email" required>
 
-      <button id="signupButton" type="submit">Sign up</button>
-    </form>
+      <label><b>Password</b></label>
+      <input type="password" v-model="password" placeholder="Enter Password" name="password" required>
+
+
+      <button id="signupButton" @click="register">Sign up</button>
+    </div>
   </div>
 </template>
+<script>
+import axios from "axios";
+export default {
+  name: "RegisterView",
+  data : function(){
+    return {
+      username : '',
+      email : '',
+      password : ''
+    }
+  },
+  methods : {
+    register(){
+      console.log("logges")
+      let NewUser = {
+        username : this.username,
+        email : this.email,
+        password : this.password,
+        roles : ['user']
+      }
+      console.log(NewUser)
+      axios.post("http://localhost:5000/api/auth/signup", NewUser)
+          .then(response =>{
+            if (response.status  === 200){
+              this.$router.push('/')
+            }
 
+          }),
+          error => {
+            console.log(error)
+          }
+
+    }
+  }
+
+}
+</script>
 <style>
 
 .register{
@@ -64,3 +92,4 @@
 }
 
 </style>
+

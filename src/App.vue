@@ -1,10 +1,5 @@
 <template>
-  <nav>
-    <router-link to="/">Home</router-link>
-    <router-link to="/basket">Basket</router-link>
-    <router-link to="/login">Log in</router-link>
-    <router-link to="/register">Sign up</router-link>
-  </nav>
+
   <router-view/>
 </template>
 
