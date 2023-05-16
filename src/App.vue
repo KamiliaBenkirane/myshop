@@ -9,27 +9,35 @@
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
-  color: #2c3e50;
 }
 
 body{
   height : 100%;
   margin: 0;
+
 }
 
 nav {
-  padding: 30px;
+  display : flex;
+  align-items: center;
+  gap : 10px;
+  justify-content: center;
+  padding: 20px;
   width : 100%;
   background-color: #131313;
+  position : fixed;
+  z-index: 2;
+  top: 0;
 }
 
 nav a {
   padding : 0 10px;
   font-weight: bold;
   color: white;
+  text-decoration: none;
 }
 
 nav a.router-link-exact-active {
-  color: #42b983;
+  color: #ab8eff;
 }
 </style>

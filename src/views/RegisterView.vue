@@ -3,6 +3,7 @@
     <router-link to="/">Log in</router-link>
     <router-link to="/register">Sign up</router-link>
   </nav>
+  <div class="flex">
   <div class="register">
     <h1>Sign up !</h1>
     <div class="signup_form">
@@ -18,6 +19,7 @@
 
       <button id="signupButton" @click="register">Sign up</button>
     </div>
+  </div>
   </div>
 </template>
 <script>
@@ -64,7 +66,7 @@ export default {
   flex-direction: column;
   justify-content: left;
   align-items: center;
-  margin-top : 10px;
+  margin-top : 50px;
 }
 
 
@@ -75,7 +77,7 @@ export default {
   text-align: left;
   row-gap : 5px;
   width : 470px;
-  background-color: #cccccc;
+  background-color: #F4F7F9;
   padding : 40px 50px;
   box-shadow: 10px 5px 5px rgba(10,10,10,0.5);
 }
@@ -90,6 +92,7 @@ export default {
   padding : 20px 60px;
   font-size : 14px;
 }
+
 
 </style>
 

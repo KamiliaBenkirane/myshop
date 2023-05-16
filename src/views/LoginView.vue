@@ -3,6 +3,7 @@
     <router-link to="/">Log in</router-link>
     <router-link to="/register">Sign up</router-link>
   </nav>
+  <div class="flex">
   <div class="login">
     <h1>Log in</h1>
     <div class="login_form">
@@ -15,6 +16,7 @@
       <button @click="login()">Login</button>
     </div>
   </div>
+  </div>
 </template>
 
 <style>
@@ -22,7 +24,8 @@ h1{
   color : white;
 }
 html{
-  background-color: #2c3e50;
+  background: rgb(87,0,115);
+  background: linear-gradient(90deg, rgba(87,0,115,1) 4%, rgba(86,43,152,1) 47%, rgba(38,46,127,1) 80%, rgba(9,48,112,1) 100%);
 }
 
 input[type=text], input[type=password] {
@@ -35,7 +38,7 @@ input[type=text], input[type=password] {
 }
 
 .login{
-  margin-top : 150px;
+  margin-top : 130px;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -43,25 +46,31 @@ input[type=text], input[type=password] {
 }
 
 .login_form{
-  border-radius : 10px;
+  border-radius : 15px;
   width : 470px;
-  background-color: #cccccc;
+  background-color: #F4F7F9;
   padding : 40px 50px;
   box-shadow: 10px 5px 5px rgba(10,10,10,0.5);
 }
 
 button{
-  background-color: #2c3e50;
+  background-color: #262e7f;
   color : white;
   padding : 10px 20px;
   border : none;
   cursor: pointer;
   border-radius : 5px;
-  margin-top : 8px;
 }
 
 button:hover{
   background-color: black;
+}
+
+.flex{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 }
 
 </style>
