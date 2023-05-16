@@ -82,9 +82,6 @@ export default {
   box-shadow: 10px 5px 5px rgba(10,10,10,0.5);
 }
 
-#birthday{
-  margin : 10px 0;
-}
 
 
 #signupButton{

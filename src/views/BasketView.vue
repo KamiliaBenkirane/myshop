@@ -53,7 +53,7 @@ export default {
   },
   methods : {
     retrieveItems() {HelloWorld.methods.retrieveItems()},
-    //discountedPrice(price, discount){HelloWorld.methods.discountedPrice()},
+
     logout() {
       this.store.$reset()
       this.$router.push('/')

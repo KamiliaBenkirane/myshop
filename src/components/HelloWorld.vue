@@ -118,17 +118,6 @@ export default {
       //console.log(`Occurrences of ${this.item.name}: ${count}`);
     }
 
-    /*countItemsOccurences(item){
-      let count = 0;
-      for (let i = 0; i < this.basket.length; i++) {
-        const tmp = this.basket[i];
-        if (item === tmp) {
-          count++;
-        }
-      }
-      return count;
-    }*/
-
   }
 
 }
@@ -181,11 +170,4 @@ export default {
   color : brown;
   font-weight: bold;
 }
-
-#search{
-  padding: 10px 10px;
-  height : 30px;
-  border-radius : 5px;
-}
-
 </style>

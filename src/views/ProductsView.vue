@@ -122,10 +122,8 @@ export default {
         this.priceCart = this.store.incrementPrice(this.discountedPrice(this.item.price, this.item.account))
         console.log(this.store.getPrice())
       }
-      /*this.priceCart += this.discountedPrice(this.item.price, this.item.account);
-    this.nbItemsCart+=1;*/
+
       this.nbItemsCart = this.store.incrementNbItems()
-      //console.log(`Occurrences of ${this.item.name}: ${count}`);
     },
   }
 }

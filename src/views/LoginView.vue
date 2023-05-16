@@ -93,7 +93,7 @@ export default {
   },
   methods : {
     login(){
-      console.log("logges")
+      //console.log("logges")
       let User = {
         username : this.username,
         password : this.password
