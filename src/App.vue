@@ -20,7 +20,7 @@ body{
 nav {
   display : flex;
   align-items: center;
-  gap : 10px;
+  gap : 20px;
   justify-content: center;
   padding: 20px;
   width : 100%;

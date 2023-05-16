@@ -5,7 +5,7 @@
     <router-link to="/basket">
       <div class="basket">
         <font-awesome-icon icon="fa-solid fa-cart-shopping" />
-        0 | $0
+        {{ nbItemsCart }}| ${{ priceCart }}
 
       </div>
 
@@ -36,7 +36,7 @@
             <p v-else class="discount no">No discount</p>
           </div>
 
-          <button id="productsButton" @click= "addToBasket()">Add to Cart <font-awesome-icon icon="fa-solid fa-cart-plus" /></button>
+          <button id="productsButton" @click= "addToBasket(item.id)">Add to Cart <font-awesome-icon icon="fa-solid fa-cart-plus" /></button>
 
         </div>
       </div>
@@ -45,18 +45,22 @@
 
 <script>
 // @ is an alias to /src
-import HelloWorld from '@/components/HelloWorld.vue'
 import {useSessionStore} from "@/stores/session";
+import HelloWorld from '@/components/HelloWorld.vue';
 import axios from "axios";
 
 export default {
   name: 'ProductsView',
+  components: {
+    // eslint-disable-next-line vue/no-unused-components
+    HelloWorld
+  },
   data() {
     return {
       items : [],
-      nbItemsCart : 0,
-      priceCart : 0.00,
-      itembasket : null,
+      columns : ['Item', 'Price', 'Quantity', 'Total'],
+      nbItemsCart : this.store.getNbItems(),
+      priceCart : this.store.getPrice(),
       basket : []
     }
   },
@@ -64,11 +68,6 @@ export default {
     const store = useSessionStore()
     return{store}
   },
-  components: {
-    // eslint-disable-next-line vue/no-unused-components
-    HelloWorld
-  },
-
   created() {
     this.checkConnection()
   },
@@ -89,14 +88,6 @@ export default {
             console.log(error)
           }
     },
-    discountedPrice(price, discount){
-      if (discount>0){
-        return price-((price*discount)/100)
-      }
-      else{
-        return price
-      }
-    },
     logout() {
       this.store.$reset()
       this.$router.push('/')
@@ -108,21 +99,35 @@ export default {
         this.retrieveItems()
       }
     },
-    addToBasket(){
-      axios.get("http://localhost:5000/api/items/one", 2)
+    discountedPrice(price, discount){
+      if (discount>0){
+        return price-((price*discount)/100)
+      }
+      else{
+        return price
+      }
+    },
+    addToBasket(id) {
+      axios.post("http://localhost:5000/api/items/one", {'id': id }, { headers: {'Content-Type': 'application/json'}} )
           .then(response => {
-                this.itembasket = response.data;
-                console.log(response.data);
-              }
-          ).catch(e =>{
-            console.log(e);
+            if (response.status === 200) {
+              console.log(response.data)
+              this.item = response.data;
+            }
+          }),
+          error => {
+            console.log(error)
           }
-      )
-    }
-
+      if (this.item) {
+        this.priceCart = this.store.incrementPrice(this.discountedPrice(this.item.price, this.item.account))
+        console.log(this.store.getPrice())
+      }
+      /*this.priceCart += this.discountedPrice(this.item.price, this.item.account);
+    this.nbItemsCart+=1;*/
+      this.nbItemsCart = this.store.incrementNbItems()
+      //console.log(`Occurrences of ${this.item.name}: ${count}`);
+    },
   }
-
-
 }
 </script>
 

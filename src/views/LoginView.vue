@@ -28,7 +28,7 @@ html{
   background: linear-gradient(90deg, rgba(87,0,115,1) 4%, rgba(86,43,152,1) 47%, rgba(38,46,127,1) 80%, rgba(9,48,112,1) 100%);
 }
 
-input[type=text], input[type=password] {
+input[type=text], input[type=password], input[type=email] {
   width: 100%;
   padding: 12px 20px;
   margin: 8px 0;
@@ -38,7 +38,7 @@ input[type=text], input[type=password] {
 }
 
 .login{
-  margin-top : 130px;
+  margin-top : 170px;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -108,7 +108,7 @@ export default {
 
       }),
           error => {
-        console.log(error)
+            console.log(error)
           }
     },
     logout(){

@@ -11,7 +11,7 @@
       <input type="text" v-model="username" placeholder="Enter Username" name="username" required>
 
       <label><b>E-mail address</b></label>
-      <input type="text" v-model="email" placeholder="Enter Email" name="email" required>
+      <input type="email" v-model="email" placeholder="Enter Email" name="email" required>
 
       <label><b>Password</b></label>
       <input type="password" v-model="password" placeholder="Enter Password" name="password" required>
@@ -66,7 +66,7 @@ export default {
   flex-direction: column;
   justify-content: left;
   align-items: center;
-  margin-top : 50px;
+  margin-top : 120px;
 }
 
 

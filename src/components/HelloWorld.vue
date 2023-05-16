@@ -10,11 +10,12 @@
       </div>
 
     </router-link>
+    <!--<div><input id="search" v-model="input" type="text" placeholder="Search.."></div>-->
     <div><button @click="logout">Log out</button></div>
   </nav>
   <div class="home">
     <div class="allItems">
-      <div class="item" v-for="item in items" :key="item.id">
+      <div class="item" v-for="item in items" :key="item.name">
         <p v-if="item.account>0" class="discount">{{ item.account }}% off!</p>
         <p v-else class="discount">No discount</p>
         <img :src=" require(`@/assets/${item.name}.jpg`)" >
@@ -34,16 +35,18 @@
 // @ is an alias to /src
 import {useSessionStore} from "@/stores/session";
 import axios from "axios";
+import { ref } from "vue";
 
 export default {
   name: 'HomeView',
   data() {
     return {
       items : [],
-      nbItemsCart : 0,
-      priceCart : 0.00,
+      nbItemsCart : this.store.getNbItems(),
+      priceCart : this.store.getPrice(),
       item : null,
-      basket : []
+      basket : this.store.getBasket(),
+      input : ref("")
     }
   },
   setup () {
@@ -58,8 +61,6 @@ export default {
       axios.get("http://localhost:5000/api/items/all")
           .then(response => {
             if (response.status === 200) {
-              console.log(response.data)
-              console.log(response.data[0].price)
               this.items = response.data;
               //this.dataItems = response.data
               //console.log(this.dataItems[0].price)
@@ -70,6 +71,11 @@ export default {
             console.log(error)
           }
     },
+    /*filteredItems() {
+      return items.filter((item) =>
+          item.toLowerCase().includes(input.value.toLowerCase())
+      );
+    },*/
     discountedPrice(price, discount){
       if (discount>0){
         return price-((price*discount)/100)
@@ -93,30 +99,24 @@ export default {
       axios.post("http://localhost:5000/api/items/one", {'id': id }, { headers: {'Content-Type': 'application/json'}} )
           .then(response => {
             if (response.status === 200) {
-              console.log(response.data)
               this.item = response.data;
             }
           }),
           error => {
             console.log(error)
           }
-      if (this.item)
-        this.priceCart += this.discountedPrice(this.item.price, this.item.account);
-      this.nbItemsCart+=1;
-      this.basket.unshift(this.item)
-      let count = 1;
+      if (this.item) {
+        this.priceCart = this.store.incrementPrice(this.discountedPrice(this.item.price, this.item.account))
+        //this.store.getBasket().unshift(this.item)
+        //console.log(this.basket2)
 
-      const existingIndex = this.basket.findIndex(item => item.item === this.item);
-
-      if (existingIndex !== -1) {
-        count = this.basket[existingIndex].count + 1;
-        this.basket[existingIndex].count = count;
-      } else {
-        this.basket.unshift({ item: this.item, count });
       }
-      console.log(this.basket);
+        /*this.priceCart += this.discountedPrice(this.item.price, this.item.account);
+      this.nbItemsCart+=1;*/
+      this.nbItemsCart = this.store.incrementNbItems()
+      //console.log(this.basket.length);
       //console.log(`Occurrences of ${this.item.name}: ${count}`);
-    },
+    }
 
     /*countItemsOccurences(item){
       let count = 0;
@@ -132,6 +132,7 @@ export default {
   }
 
 }
+
 </script>
 
 
@@ -179,6 +180,12 @@ export default {
   text-align: left;
   color : brown;
   font-weight: bold;
+}
+
+#search{
+  padding: 10px 10px;
+  height : 30px;
+  border-radius : 5px;
 }
 
 </style>
